@@ -573,8 +573,8 @@ const App = () => {
     setFormData({
       date: getLocalISOString(),
       id: '',
-      branch: user?.role !== 'ADMIN' ? user.role : '',
-      brand: '',
+      branch: (user?.role !== 'ADMIN' && user?.roleType !== 'BRAND') ? user.role : '',
+      brand: user?.roleType === 'BRAND' ? user.role : '',
       closedDate: '',
       serviceType: '',
       reason: '',
@@ -1751,7 +1751,7 @@ const App = () => {
                   <div className="table-header">
                     <div className="flex items-center gap-4">
                       <h3 className="font-bold">Recent Escalations</h3>
-                      {user?.role === 'ADMIN' && (
+                      {(user?.role === 'ADMIN' || user?.roleType === 'BRAND') && (
                         <button className="btn-sm btn-primary-sm" onClick={() => setModalOpen(true)}><Plus size={16} /> New Case</button>
                       )}
                     </div>
@@ -1762,11 +1762,11 @@ const App = () => {
                         value={filters.date || ''}
                         onChange={(e) => setFilters({ ...filters, date: e.target.value })}
                       />
-                      {(user.role === 'ADMIN' || (user.role && (String(user.role).toLowerCase() === 'bangalore' || String(user.role).toLowerCase() === 'uttar pradesh'))) && (
+                      {(user.role === 'ADMIN' || user?.roleType === 'BRAND' || (user.role && (String(user.role).toLowerCase() === 'bangalore' || String(user.role).toLowerCase() === 'uttar pradesh'))) && (
                         <select className="btn-sm" value={filters.branch} onChange={(e) => setFilters({ ...filters, branch: e.target.value })}>
                           <option value="">All Branches</option>
                           {BRANCHES.map(b => {
-                            if (user.role !== 'ADMIN') {
+                            if (user.role !== 'ADMIN' && user?.roleType !== 'BRAND') {
                                 const uRole = String(user.role).toLowerCase();
                                 if (uRole === 'bangalore') {
                                     const bLower = b.toLowerCase();
@@ -1825,14 +1825,14 @@ const App = () => {
                         value={filters.aging}
                         onChange={(e) => setFilters({ ...filters, aging: e.target.value })}
                       />
-                      {user?.role === 'ADMIN' && (
+                      {(user?.role === 'ADMIN' || user?.roleType === 'BRAND') && (
                         <label className="btn-sm flex items-center gap-2">
                           <FileUp size={16} /> Import
                           <input type="file" className="hidden" accept=".csv, .xlsx, .xls" onChange={handleImport} />
                         </label>
                       )}
                       <button className="btn-sm flex items-center gap-2" onClick={handleExport}><FileDown size={16} /> Export</button>
-                      {user.role === 'ADMIN' && (
+                      {(user.role === 'ADMIN' || user?.roleType === 'BRAND') && (
                         <button className="btn-sm flex items-center gap-2" style={{ color: 'var(--danger)' }} onClick={handleClearAll}><Trash2 size={16} /> Clear</button>
                       )}
                     </div>
