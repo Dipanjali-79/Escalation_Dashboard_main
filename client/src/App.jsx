@@ -1005,7 +1005,7 @@ const App = () => {
       labels: brands,
       datasets: [{
         label: 'Cases by Brand',
-        data: brands.map(brand => filteredData.filter(d => d && String(d.brand || "").toLowerCase() === brand.toLowerCase()).length),
+        data: brands.map(brand => filteredData.filter(d => d && String(d.brand || "").trim().toLowerCase() === brand.toLowerCase()).length),
         backgroundColor: '#6366f1',
         borderRadius: 4
       }]
