@@ -480,6 +480,10 @@ const App = () => {
         setLoginError('Please enter a Brand Name.');
         return;
       }
+      if (!["SALORA", "AERO NERO", "LEDVANCE"].includes(uUpper)) {
+        setLoginError('Only AERO NERO, LEDVANCE, or SALORA are permitted for Brand Login.');
+        return;
+      }
     } else if (selectedEntity) {
       uUpper = selectedEntity.toUpperCase();
     } else {
@@ -1986,7 +1990,7 @@ const App = () => {
                   <select
                     className="form-control"
                     required
-                    disabled={user?.role !== 'ADMIN' && user?.roleType !== 'BRAND'}
+                    disabled={user?.roleType === 'BRAND'}
                     value={formData.brand}
                     onChange={(e) => setFormData({ ...formData, brand: e.target.value })}
                   >
