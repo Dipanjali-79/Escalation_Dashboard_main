@@ -474,6 +474,12 @@ const App = () => {
     let uUpper = '';
     if (loginMode === 'ADMIN') {
       uUpper = 'ADMIN';
+    } else if (loginMode === 'BRAND') {
+      uUpper = e.target.loginBrand.value.trim().toUpperCase();
+      if (!uUpper) {
+        setLoginError('Please enter a Brand Name.');
+        return;
+      }
     } else if (selectedEntity) {
       uUpper = selectedEntity.toUpperCase();
     } else {
@@ -1363,10 +1369,23 @@ const App = () => {
             <button type="button" className={`login-mode-btn ${loginMode === 'ADMIN' ? 'active' : ''}`} onClick={() => { setLoginMode('ADMIN'); setSelectedEntity(''); setLoginError(''); }}>Admin</button>
           </div>
 
-          {loginMode !== 'ADMIN' && (
+          {loginMode === 'BRAND' && (
+            <div className="flex flex-col gap-1" style={{ marginBottom: '1.25rem' }}>
+               <input 
+                 name="loginBrand" 
+                 type="text" 
+                 className="login-input" 
+                 placeholder="Enter Brand Name (e.g. SALORA)" 
+                 required 
+                 autoComplete="off"
+               />
+            </div>
+          )}
+
+          {loginMode === 'BRANCH' && (
             <div className="chip-grid-wrapper">
               <div className="chip-grid">
-                {(loginMode === 'BRAND' ? BRANDS : BRANCHES).map(item => (
+                {BRANCHES.map(item => (
                   <div 
                     key={item} 
                     className={`chip ${selectedEntity === item ? 'active' : ''}`}
