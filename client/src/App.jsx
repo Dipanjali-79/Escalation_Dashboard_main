@@ -766,7 +766,9 @@ const App = () => {
           }
           // ----------------------------
 
-          if (user.role !== "ADMIN") {
+          if (user.roleType === 'BRAND') {
+            entry.brand = user.role; // Force the brand to the user's role
+          } else if (user.role !== "ADMIN") {
             const uRole = String(user.role).toLowerCase();
             const eBranch = String(entry.branch).toLowerCase();
             if (uRole === 'bangalore') {
