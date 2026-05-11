@@ -625,10 +625,19 @@ const App = () => {
   };
 
   const handleClearAll = async () => {
-    if (!window.confirm("CRITICAL: Delete ALL records?")) return;
+    let confirmMsg = "CRITICAL: Delete ALL records?";
+    if (user?.role !== 'ADMIN') {
+      confirmMsg = `CRITICAL: Delete all records for ${user?.role}?`;
+    }
+    if (!window.confirm(confirmMsg)) return;
     try {
-      await axios.delete(`${API_URL}/all`);
-      showToast('Cleared All Data');
+      await axios.delete(`${API_URL}/all`, {
+        params: {
+          role: user?.role,
+          roleType: user?.roleType
+        }
+      });
+      showToast('Cleared Data');
       loadData();
     } catch (err) {
       showToast('Clear failed', 'error');

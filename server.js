@@ -130,8 +130,22 @@ app.put('/api/escalations/:id', async (req, res) => {
 app.delete('/api/escalations/:id', async (req, res) => {
     try {
         if (req.params.id === 'all') {
-            await Escalation.deleteMany({});
-            return res.json({ message: 'All escalations deleted' });
+            const { role, roleType } = req.query;
+            if (role && role !== 'ADMIN') {
+                if (roleType === 'BRAND') {
+                    await Escalation.deleteMany({ brand: { $regex: new RegExp(`^${role}$`, 'i') } });
+                } else {
+                    if (role.toLowerCase() === 'bangalore') {
+                        await Escalation.deleteMany({ branch: { $regex: /^(bangalore|ro kar)$/i } });
+                    } else {
+                        await Escalation.deleteMany({ branch: { $regex: new RegExp(`^${role}$`, 'i') } });
+                    }
+                }
+                return res.json({ message: `All escalations deleted for ${role}` });
+            } else {
+                await Escalation.deleteMany({});
+                return res.json({ message: 'All escalations deleted' });
+            }
         }
         await Escalation.findByIdAndDelete(req.params.id);
         res.json({ message: 'Escalation deleted' });
