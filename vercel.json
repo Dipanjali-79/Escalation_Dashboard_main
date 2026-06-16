@@ -1,0 +1,22 @@
+{
+  "version": 2,
+  "functions": {
+    "server.js": {
+      "includeFiles": "dist/**"
+    }
+  },
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "server.js"
+    },
+    {
+      "src": "/health",
+      "dest": "server.js"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "server.js"
+    }
+  ]
+}
