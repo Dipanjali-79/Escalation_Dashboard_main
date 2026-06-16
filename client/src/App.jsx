@@ -396,6 +396,8 @@ const App = () => {
             const dBranch = String(d.branch || "").trim().toLowerCase();
             if (uRole === 'bangalore') {
               return dBranch === 'bangalore' || dBranch === 'ro kar';
+            } else if (uRole === 'uttar pradesh') {
+              return dBranch === 'uttar pradesh' || dBranch === 'up east' || dBranch === 'up west' || dBranch === 'upeast' || dBranch === 'upwest';
             }
             return dBranch === uRole;
           }
@@ -414,6 +416,8 @@ const App = () => {
           matchesBranch = true;
         } else if (fBranch === 'bangalore') {
           matchesBranch = (dBranch === 'bangalore' || dBranch === 'ro kar');
+        } else if (fBranch === 'uttar pradesh') {
+          matchesBranch = (dBranch === 'uttar pradesh' || dBranch === 'up east' || dBranch === 'up west' || dBranch === 'upeast' || dBranch === 'upwest');
         } else {
           matchesBranch = (dBranch === fBranch);
         }
@@ -851,6 +855,8 @@ const App = () => {
             const eBranch = String(entry.branch).toLowerCase();
             if (uRole === 'bangalore') {
               if (eBranch !== 'bangalore' && eBranch !== 'ro kar') continue;
+            } else if (uRole === 'uttar pradesh') {
+              if (eBranch !== 'uttar pradesh' && eBranch !== 'up east' && eBranch !== 'up west' && eBranch !== 'upeast' && eBranch !== 'upwest') continue;
             } else if (eBranch !== uRole) {
               continue;
             }
@@ -1143,6 +1149,7 @@ const App = () => {
       const bLower = bName.toLowerCase();
       // Merge sub-branches and typos
       if (bLower === 'mumbai') bName = 'Mum_Thn';
+      if (bLower === 'up east' || bLower === 'up west' || bLower === 'upeast' || bLower === 'upwest') bName = 'Uttar Pradesh';
       
       if (!bName) return;
       if (!branchMap[bName]) branchMap[bName] = { total: 0, open: 0 };
@@ -1883,6 +1890,9 @@ const App = () => {
                                 if (uRole === 'bangalore') {
                                     const bLower = b.toLowerCase();
                                     if (bLower !== 'bangalore' && bLower !== 'ro kar') return null;
+                                } else if (uRole === 'uttar pradesh') {
+                                    const bLower = b.toLowerCase();
+                                    if (bLower !== 'uttar pradesh' && bLower !== 'up east' && bLower !== 'up west' && bLower !== 'upeast' && bLower !== 'upwest') return null;
                                 }
                             }
                             return <option key={b}>{b}</option>;
