@@ -1045,7 +1045,7 @@ const App = () => {
       const avgAging = s.total > 0 ? (s.totalAging / s.total).toFixed(1) : "0.0";
       const compliance = s.total > 0 ? Math.round((s.closed / s.total) * 100) : 0;
       return { branch, ...s, avgAging, compliance };
-    });
+    }).filter(r => r.total > 0);
   }, [data, deferredFilters, user]);
 
   const chartData = useMemo(() => {
