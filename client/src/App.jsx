@@ -2171,15 +2171,21 @@ const App = () => {
                   <select
                     className="form-control"
                     required
-                    disabled={user.role !== 'ADMIN' && user.roleType !== 'BRAND' && String(user.role || '').toLowerCase() !== 'bangalore'}
+                    disabled={user.role !== 'ADMIN' && user.roleType !== 'BRAND' && String(user.role || '').toLowerCase() !== 'bangalore' && String(user.role || '').toLowerCase() !== 'uttar pradesh'}
                     value={formData.branch}
                     onChange={(e) => setFormData({ ...formData, branch: e.target.value })}
                   >
                     <option value="">Select Branch</option>
                     {BRANCHES.map(b => {
-                      if (user.role !== 'ADMIN' && user.roleType !== 'BRAND' && String(user.role || '').toLowerCase() === 'bangalore') {
-                        const bLower = b.toLowerCase();
-                        if (bLower !== 'bangalore' && bLower !== 'ro kar') return null;
+                      if (user.role !== 'ADMIN' && user.roleType !== 'BRAND') {
+                        const uRole = String(user.role || '').toLowerCase();
+                        if (uRole === 'bangalore') {
+                          const bLower = b.toLowerCase();
+                          if (bLower !== 'bangalore' && bLower !== 'ro kar') return null;
+                        } else if (uRole === 'uttar pradesh') {
+                          const bLower = b.toLowerCase();
+                          if (bLower !== 'uttar pradesh' && bLower !== 'up east' && bLower !== 'up west' && bLower !== 'upeast' && bLower !== 'upwest') return null;
+                        }
                       }
                       return <option key={b}>{b}</option>;
                     })}
