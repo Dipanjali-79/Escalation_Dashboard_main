@@ -2077,15 +2077,17 @@ const App = () => {
                   <div className="table-header">
                     <h3 className="font-bold">Branch Performance Summary</h3>
                     <div className="action-group">
-                      <input
-                        list="brand-list"
-                        className="btn-sm"
-                        placeholder="Search Brand..."
-                        style={{ width: '130px' }}
+                      <select 
+                        className="btn-sm" 
                         disabled={user?.roleType === 'BRAND'}
-                        value={filters.brand}
+                        value={filters.brand} 
                         onChange={(e) => setFilters({ ...filters, brand: e.target.value })}
-                      />
+                      >
+                        <option value="">All Brands</option>
+                        {BRANDS.map(b => (
+                          <option key={b} value={b}>{b}</option>
+                        ))}
+                      </select>
                       <input
                         type="date"
                         className="btn-sm"
