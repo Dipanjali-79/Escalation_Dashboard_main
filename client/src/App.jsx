@@ -416,8 +416,6 @@ const App = () => {
           matchesBranch = true;
         } else if (fBranch === 'bangalore') {
           matchesBranch = (dBranch === 'bangalore' || dBranch === 'ro kar');
-        } else if (fBranch === 'uttar pradesh') {
-          matchesBranch = (dBranch === 'uttar pradesh' || dBranch === 'up east' || dBranch === 'up west' || dBranch === 'upeast' || dBranch === 'upwest');
         } else {
           matchesBranch = (dBranch === fBranch);
         }
@@ -1149,7 +1147,6 @@ const App = () => {
       const bLower = bName.toLowerCase();
       // Merge sub-branches and typos
       if (bLower === 'mumbai') bName = 'Mum_Thn';
-      if (bLower === 'up east' || bLower === 'up west' || bLower === 'upeast' || bLower === 'upwest') bName = 'Uttar Pradesh';
       
       if (!bName) return;
       if (!branchMap[bName]) branchMap[bName] = { total: 0, open: 0 };
